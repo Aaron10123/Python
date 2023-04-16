@@ -37,11 +37,11 @@
 a = int(input("請輸入成績"))
 if a >= 90:
     print("你是等第A")
-elif a >= 80 and a <= 89.9:
+elif a >= 80 and a <= 89:
     print("你是等第B")
-elif a >= 70 and a <= 79.9:
+elif a >= 70 and a <= 79:
     print("你是等第C")
-elif a >= 60 and a <= 69.9:
+elif a >= 60 and a <= 69:
     print("你是等第D")
 else:
     print("你是等第E")
