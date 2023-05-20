@@ -12,8 +12,8 @@ while True:
         while True:
             try:
                 v = int(input('請輸入分數:'))
-            except ValueError:
-                print('錯誤')
+            # except ValueError:
+            #     print('錯誤')
             except:
                 print("發生錯誤")
             else:
