@@ -47,8 +47,8 @@
 # import turtle
 
 # turtle.penup()  #提筆
-# turtle.color('blue')  #設定烏龜形'arrow', 'turtle', 'circle', 'square', 'triangle', 'classic'.
-# turtle.shape('square')
+# turtle.color('blue')  #設定烏龜顏色
+# turtle.shape('square')  #設定烏龜形'arrow', 'turtle', 'circle', 'square', 'triangle', 'classic'.
 # for i in range(0, 200, 2):
 #     turtle.forward(i)
 #     turtle.right(30)
