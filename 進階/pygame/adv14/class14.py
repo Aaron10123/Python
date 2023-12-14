@@ -95,7 +95,7 @@ img_sship = [
     pygame.image.load("fighter_L.png"),
     pygame.image.load("fighter_R.png"),
 ]
-
+img_burn = pygame.image.load("starship_burner.png")
 
 ######################遊戲視窗設定######################
 bg_x = img.get_width()
