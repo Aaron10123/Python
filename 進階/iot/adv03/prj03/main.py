@@ -1,5 +1,5 @@
 #########################匯入模組#########################
-from machine import Pin
+from machine import Pin, ADC
 from time import sleep
 import mcu
 
@@ -7,22 +7,10 @@ import mcu
 
 #########################宣告與設定#########################
 gpio = mcu.gpio()
-RED = Pin(gpio.D5, Pin.OUT)
-GREEN = Pin(gpio.D6, Pin.OUT)
-BLUE = Pin(gpio.D7, Pin.OUT)
-
+light_sensor = ADC(0)
 
 #########################主程式#########################
-
-
 while True:
-    BLUE.value(0)
-    GREEN.value(0)
-    RED.value(1)
-    sleep(1)
-    RED.value(0)
-    BLUE.value(1)
-    sleep(1)
-    BLUE.value(0)
-    GREEN.value(1)
+    light_sensor_reading = light_sensor.read()
+    print(f"value={light_sensor_reading},{round(light_sensor_reading*100/1024)}%")
     sleep(1)
