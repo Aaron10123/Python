@@ -14,3 +14,13 @@ while True:
     light_sensor_reading = light_sensor.read()
     print(f"value={light_sensor_reading},{round(light_sensor_reading*100/1024)}%")
     sleep(1)
+# #########################匯入模組#########################
+# from machine import Pin, ADC
+# from time import sleep
+# import mcu
+
+# #########################函式與類別定義#########################
+
+# #########################宣告與設定#########################
+
+# #########################主程式#########################
