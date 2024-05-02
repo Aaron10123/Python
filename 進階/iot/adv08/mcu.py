@@ -1,4 +1,7 @@
 import network
+from umqtt.simple import MQTTClient
+import sys
+from machine import Pin, PWM
 
 
 class gpio:
@@ -124,3 +127,49 @@ class wifi:
             self.ip = self.sta.ifconfig()[0]
             print("Connected to WIFI", "IP:", self.ip)
             return True
+
+
+class MQTT:
+    def __init__(self, mqttClientId, mq_server, mqtt_username, mqtt_password):
+        self.mq_server = mq_server
+        self.mqttClientId = mqttClientId
+        self.mqtt_username = mqtt_username
+        self.mqtt_password = mqtt_password
+        self.mqClient0 = MQTTClient(
+            mqttClientId,
+            mq_server,
+            user=mqtt_username,
+            password=mqtt_password,
+            keepalive=30,
+        )
+
+    def connect(self):
+        try:
+            self.mqClient0.connect()
+        except:
+            sys.exit()
+        finally:
+            print("connect MQTT server")
+
+    def subscribe(self, topic, on_message):
+        self.mqClient0.set_callback(on_message)
+        self.mqClient0.subscribe(topic)
+
+    def check_msg(self):
+        self.mqClient0.check_msg()
+        self.mqClient0.ping()
+
+
+class LED:
+    def __init__(self, r_pin, g_pin, b_pin, pwm=False):
+        if pwm == False:
+            self.RED = Pin(r_pin, Pin.OUT)
+            self.GREEN = Pin(g_pin, Pin.OUT)
+            self.BLUE = Pin(b_pin, Pin.OUT)
+
+        else:
+            frequency = 1000
+            duty_cycle = 0
+            self.RED = PWM(Pin(r_pin), freq=frequency, duty=duty_cycle)
+            self.GREEN = PWM(Pin(g_pin), freq=frequency, duty=duty_cycle)
+            self.BLUE = PWM(Pin(b_pin), freq=frequency, duty=duty_cycle)
