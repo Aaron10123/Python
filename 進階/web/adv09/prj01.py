@@ -49,39 +49,6 @@ async def on_message(message):
                 channel_games[channel_id]["history"] = []
             history = channel_games[channel_id]["history"]  # 縮短名稱
             history.append({"role": "user", "content": user_input})  # 加入历史記錄
-            meggage = (
-                [
-                    {
-                        "role": "user",
-                        "content": f"""你是一個海龜湯遊戲的主持人,
-                         根據以下的謎題回答玩家的提問。你的回應只能是「是」、「不是」、「無可奉告」、「恭喜答對!」,
-                         並盡可能簡短,當玩家要求提示的時候,你可以提供"關鍵字"當作提示。
-                         謎題:{game_date['question']}解答:{game_date['answer']}""",
-                    }
-                ]
-                + history
-            )
-            try:
-                response = openai.chat.completions.create(
-                    model="gpt-4o",
-                    messages=meggage,
-                    temperature=0.5,
-                )
-                answer = response.choices[0].message.content
-                if answer == "恭喜答對!":
-                    game_date["solved"] = True
-                    await message.channel.send("恭喜答對!")
-                    channel_games.pop(channel_id)
-                else:
-                    history.append({"role": "assistant", "content": answer})
-                    channel_games[channel_id]["history"] = history
-                    await message.channel.send(answer)
-                    print(message)
-
-            except Exception as e:
-                await message.channel.send(f"發生錯誤：{e}")
-    else:
-        await bot.process_commands(message)
 
 
 # 以頻道為鍵key,遊戲狀態為value,這是一個全域變數,所有指令都可以存取
