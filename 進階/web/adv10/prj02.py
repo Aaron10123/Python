@@ -49,8 +49,6 @@ async def on_message(message):
                 await message.channel.send("恭喜答對!")
             else:
                 await message.channel.send(response)
-    else:  # 沒有遊戲在進行中
-        await bot.process_commands(message)
 
 
 #######################指令#######################
@@ -69,10 +67,8 @@ async def weather(
     ai: bool = False,
 ):
     await interaction.response.defer()
-
-    unit_symbol = "°C" if weather_api.units == "metric" else "°F"
     if not forecast:
-        info = weather_api.get_current_weather(city_name)
+        info = weather_api.get_weather_info(city_name)
         embed = await weather_api.create_weather_embed(city_name, info)
         if embed:
             await interaction.followup.send(embed=embed)
@@ -85,18 +81,18 @@ async def weather(
                 embeds = await weather_api.create_forecast_embed(city_name, info)
                 if embeds:
                     await interaction.followup.send(embeds=embeds)
-                else:
-                    try:
-                        analysis = await weather_api.analyze_weather(
-                            city_name, info, openai
-                        )
-                        await interaction.followup.send(
-                            f"**{city_name}的天氣情況**\n{analysis}"
-                        )
-                    except Exception as e:
-                        await interaction.followup.send(f"發生錯誤：{e}")
-            else:  # 使用AI
-                await interaction.followup.send(f"找不到**{city_name}**的天氣預報")
+            else:
+                try:
+                    analysis = await weather_api.analyze_weather(
+                        city_name, info, openai
+                    )
+                    await interaction.followup.send(
+                        f"**{city_name}的天氣情況**\n{analysis}"
+                    )
+                except Exception as e:
+                    await interaction.followup.send(f"發生錯誤：{e}")
+        else:  # 使用AI
+            await interaction.followup.send(f"找不到**{city_name}**的天氣預報")
 
 
 @tree.command(name="turtle_soup", description="開始遊戲")

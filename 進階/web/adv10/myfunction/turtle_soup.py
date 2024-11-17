@@ -14,7 +14,7 @@ class TurtleSoupGame:
     def load_questions(self):
         """從JSON檔案載入題目"""
         try:
-            os.chdir(os.path[0])
+            os.chdir(sys.path[0])
             json_path = "turtle_soup.json"
             with open(json_path, "r", encoding="utf-8") as f:
                 self.questions = json.load(f)
